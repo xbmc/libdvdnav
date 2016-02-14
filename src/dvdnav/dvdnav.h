@@ -699,6 +699,7 @@ int8_t dvdnav_is_domain_vtsm(dvdnav_t *self);
  */
 int8_t dvdnav_is_domain_vts(dvdnav_t *self);
 
+void dvdnav_free(void* pdata);
 
 #ifdef __cplusplus
 }
