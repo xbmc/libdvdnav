@@ -252,6 +252,15 @@ int ifoOpenNewVTSI(vm_t *vm, dvd_reader_t *dvd, int vtsN) {
     fprintf(MSG_OUT, "libdvdnav: ifoRead_TITLE_VOBU_ADMAP vtsi failed\n");
     return 0;
   }
+  if (!ifoRead_VTS_TMAPT(vm->vtsi)) {
+    fprintf(MSG_OUT, "libdvdnav: ifoRead_VTS_TMAPT vtsi failed\n");
+    return 0;    
+  }
+  if (!ifoRead_TITLE_C_ADT(vm->vtsi)) {
+    fprintf(MSG_OUT, "libdvdnav: ifoRead_TITLE_C_ADT vtsi failed\n");
+    return 0;
+  }
+
   vm->state.vtsN = vtsN;
 
   return 1;
@@ -409,6 +418,13 @@ int vm_reset(vm_t *vm, const char *dvdroot,
     if(dvd_read_name(vm->dvd_name, vm->dvd_serial, dvdroot) != 1) {
       fprintf(MSG_OUT, "libdvdnav: vm: dvd_read_name failed\n");
     }
+#ifdef _XBMC
+    if (DVDUDFVolumeInfo(vm->dvd, vm->dvd_name, sizeof(vm->dvd_name), NULL, 0))
+      if (DVDISOVolumeInfo(vm->dvd, vm->dvd_name, sizeof(vm->dvd_name), NULL, 0))
+        strcpy(vm->dvd_name, "");
+
+    fprintf(MSG_OUT, "libdvdnav: vm: DVD Title: %s\n", vm->dvd_name);
+#endif
   }
   if (vm->vmgi) {
     int i, mask;
@@ -1103,4 +1119,45 @@ ifo_handle_t *vm_get_title_ifo(vm_t *vm, uint32_t title)
 void vm_ifo_close(ifo_handle_t *ifo)
 {
   ifoClose(ifo);
+}
+
+int vm_get_state(vm_t *vm, dvd_state_t *save_state) {
+  *save_state = vm->state;
+  /* remove the pgc pointer as it might not be valid later*/
+  save_state->pgc = NULL;
+  return 1;  
+}
+
+int vm_set_state(vm_t *vm, dvd_state_t *save_state) {
+  /* restore state from save_state as taken from ogle */
+
+  /* open the needed vts */
+  if (!ifoOpenNewVTSI(vm, vm->dvd, save_state->vtsN)) return 0;
+  // sets state.vtsN
+
+  vm->state = *save_state;
+  /* set state.domain before calling */
+  //calls get_pgcit()
+  //      needs state.domain and sprm[0] set
+  //      sets pgcit depending on state.domain
+  //writes: state.pgc
+  //        state.pgN
+  //        state.TT_PGCN_REG
+
+  if (!set_PGCN(vm, save_state->pgcN)) return 0;
+  save_state->pgc = vm->state.pgc;
+
+  /* set the rest of state after the call */
+  vm->state = *save_state;
+
+  /* if we are not in standard playback, we must get all data */
+  /* otherwise we risk loosing stillframes, and overlays */
+  if (vm->state.domain != DVD_DOMAIN_VTSTitle)
+    vm->state.blockN = 0;
+
+  /* force a flush of data here */
+  /* we don't need a hop seek here as it's a complete state*/
+  vm->hop_channel++;
+
+  return 1;
 }

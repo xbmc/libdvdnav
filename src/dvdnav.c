@@ -564,6 +564,10 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
         /* Decode nav into pci and dsi. Then get next VOBU info. */
         if(!dvdnav_decode_packet(*buf, &this->dsi, &this->pci)) {
           printerr("Expected NAV packet but none found.");
+#ifdef _XBMC
+          /* skip this cell as we won't recover from this*/
+          vm_get_next_cell(this->vm);
+#endif
           pthread_mutex_unlock(&this->vm_lock);
           return DVDNAV_STATUS_ERR;
         }
@@ -860,6 +864,10 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
     /* Decode nav into pci and dsi. Then get next VOBU info. */
     if(!dvdnav_decode_packet(*buf, &this->dsi, &this->pci)) {
       printerr("Expected NAV packet but none found.");
+#ifdef _XBMC
+      /* skip this cell as we won't recover from this*/
+      vm_get_next_cell(this->vm);
+#endif
       pthread_mutex_unlock(&this->vm_lock);
       return DVDNAV_STATUS_ERR;
     }
@@ -1257,6 +1265,11 @@ user_ops_t dvdnav_get_restrictions(dvdnav_t* this) {
 
   ops.ops_int = 0;
 
+  if (!this) {
+    printerr("Passed a NULL pointer.");
+    return ops.ops_struct;
+  }
+
   if(!this->started) {
     printerr("Virtual DVD machine not started.");
     return ops.ops_struct;
@@ -1273,3 +1286,55 @@ user_ops_t dvdnav_get_restrictions(dvdnav_t* this) {
 
   return ops.ops_struct;
 }
+
+#ifdef _XBMC
+
+vm_t* dvdnav_get_vm(dvdnav_t *this) {
+  if (!this) return 0;
+  return this->vm;
+}
+
+/* return the alpha and color for the current active button
+ * color, alpha [0][] = selection
+ * color, alpha = color
+ *
+ * argsize = [2][4]
+ */
+int dvdnav_get_button_info(dvdnav_t* this, int alpha[2][4], int color[2][4])
+{
+  int current_button, current_button_color, i;
+  pci_t* pci;
+  
+  if (!this) return -1;
+  
+  pci = dvdnav_get_current_nav_pci(this);
+  if (!pci) return -1;
+  
+  dvdnav_get_current_highlight(this, &current_button);
+  current_button_color = pci->hli.btnit[current_button - 1].btn_coln;
+  
+  for (i = 0; i < 2; i++)
+  {
+    alpha[i][0] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 0 & 0xf;
+    alpha[i][1] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 4 & 0xf;
+    alpha[i][2] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 8 & 0xf;
+    alpha[i][3] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 12 & 0xf;
+
+    color[i][0] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 16 & 0xf;
+    color[i][1] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 20 & 0xf;
+    color[i][2] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 24 & 0xf;
+    color[i][3] = pci->hli.btn_colit.btn_coli[current_button_color - 1][i] >> 28 & 0xf;
+  }
+
+  return 0;
+}
+
+void dvdnav_free(void* pdata)
+{
+  free(pdata);
+}
+
+#undef printerr
+#define printerr(str) strncpy(self->err_str, str, MAX_ERR_LEN);
+
+#endif // _XBMC

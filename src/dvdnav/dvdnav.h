@@ -382,6 +382,14 @@ dvdnav_status_t dvdnav_sector_search(dvdnav_t *self,
 int64_t dvdnav_get_current_time(dvdnav_t *self);
 
 /*
+ * Find the nearest vobu and jump to it
+ *
+ * Alternative to dvdnav_time_search
+ */
+dvdnav_status_t dvdnav_jump_to_sector_by_time(dvdnav_t *this, 
+                                              uint64_t time_in_pts_ticks, int32_t mode);
+
+/*
  * Stop playing the current position and start playback of the title
  * from the specified timecode.
  *
@@ -699,6 +707,7 @@ int8_t dvdnav_is_domain_vtsm(dvdnav_t *self);
  */
 int8_t dvdnav_is_domain_vts(dvdnav_t *self);
 
+void dvdnav_free(void* pdata);
 
 #ifdef __cplusplus
 }
