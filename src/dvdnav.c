@@ -564,6 +564,10 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
         /* Decode nav into pci and dsi. Then get next VOBU info. */
         if(!dvdnav_decode_packet(*buf, &this->dsi, &this->pci)) {
           printerr("Expected NAV packet but none found.");
+#ifdef _XBMC
+          /* skip this cell as we won't recover from this*/
+          vm_get_next_cell(this->vm);
+#endif
           pthread_mutex_unlock(&this->vm_lock);
           return DVDNAV_STATUS_ERR;
         }
@@ -860,6 +864,10 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
     /* Decode nav into pci and dsi. Then get next VOBU info. */
     if(!dvdnav_decode_packet(*buf, &this->dsi, &this->pci)) {
       printerr("Expected NAV packet but none found.");
+#ifdef _XBMC
+      /* skip this cell as we won't recover from this*/
+      vm_get_next_cell(this->vm);
+#endif
       pthread_mutex_unlock(&this->vm_lock);
       return DVDNAV_STATUS_ERR;
     }
