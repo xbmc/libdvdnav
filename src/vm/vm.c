@@ -1104,3 +1104,44 @@ void vm_ifo_close(ifo_handle_t *ifo)
 {
   ifoClose(ifo);
 }
+
+int vm_get_state(vm_t *vm, dvd_state_t *save_state) {
+  *save_state = vm->state;
+  /* remove the pgc pointer as it might not be valid later*/
+  save_state->pgc = NULL;
+  return 1;  
+}
+
+int vm_set_state(vm_t *vm, dvd_state_t *save_state) {
+  /* restore state from save_state as taken from ogle */
+
+  /* open the needed vts */
+  if (!ifoOpenNewVTSI(vm, vm->dvd, save_state->vtsN)) return 0;
+  // sets state.vtsN
+
+  vm->state = *save_state;
+  /* set state.domain before calling */
+  //calls get_pgcit()
+  //      needs state.domain and sprm[0] set
+  //      sets pgcit depending on state.domain
+  //writes: state.pgc
+  //        state.pgN
+  //        state.TT_PGCN_REG
+
+  if (!set_PGCN(vm, save_state->pgcN)) return 0;
+  save_state->pgc = vm->state.pgc;
+
+  /* set the rest of state after the call */
+  vm->state = *save_state;
+
+  /* if we are not in standard playback, we must get all data */
+  /* otherwise we risk loosing stillframes, and overlays */
+  if (vm->state.domain != DVD_DOMAIN_VTSTitle)
+    vm->state.blockN = 0;
+
+  /* force a flush of data here */
+  /* we don't need a hop seek here as it's a complete state*/
+  vm->hop_channel++;
+
+  return 1;
+}

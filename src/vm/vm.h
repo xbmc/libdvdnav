@@ -161,6 +161,9 @@ subp_attr_t  vm_get_subp_attr(vm_t *vm, int streamN);
 ifo_handle_t *vm_get_title_ifo(vm_t *vm, uint32_t title);
 void vm_ifo_close(ifo_handle_t *ifo);
 
+int vm_get_state(vm_t *vm, dvd_state_t *save_state);
+int vm_set_state(vm_t *vm, dvd_state_t *save_state);
+
 /* Uncomment for VM command tracing */
 /* #define TRACE */
 #ifdef TRACE
