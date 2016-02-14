@@ -1265,6 +1265,11 @@ user_ops_t dvdnav_get_restrictions(dvdnav_t* this) {
 
   ops.ops_int = 0;
 
+  if (!this) {
+    printerr("Passed a NULL pointer.");
+    return ops.ops_struct;
+  }
+
   if(!this->started) {
     printerr("Virtual DVD machine not started.");
     return ops.ops_struct;
