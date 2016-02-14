@@ -474,6 +474,13 @@ int vm_reset(vm_t *vm, const char *dvdroot,
     if(dvd_read_name(vm, vm->dvd_name, vm->dvd_serial, dvdroot) != 1) {
       Log1(vm, "vm: dvd_read_name failed");
     }
+#ifdef _XBMC
+    if (DVDUDFVolumeInfo(vm->dvd, vm->dvd_name, sizeof(vm->dvd_name), NULL, 0))
+      if (DVDISOVolumeInfo(vm->dvd, vm->dvd_name, sizeof(vm->dvd_name), NULL, 0))
+        strcpy(vm->dvd_name, "");
+
+    fprintf(MSG_OUT, "libdvdnav: vm: DVD Title: %s\n", vm->dvd_name);
+#endif
   }
   if (vm->vmgi) {
     int i, mask;
