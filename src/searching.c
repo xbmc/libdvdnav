@@ -121,6 +121,12 @@ dvdnav_status_t dvdnav_time_search(dvdnav_t *this,
     return DVDNAV_STATUS_ERR;
   }
 
+  if ((state->pgc->prohibited_ops.title_or_time_play == 1) ||
+    (this->pci.pci_gi.vobu_uop_ctl.title_or_time_play == 1)){
+    printerr("operation forbidden.");
+    pthread_mutex_unlock(&this->vm_lock);
+    return DVDNAV_STATUS_ERR;
+  }
 
   this->cur_cell_time = 0;
   if (this->pgc_based) {
