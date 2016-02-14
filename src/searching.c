@@ -208,6 +208,7 @@ dvdnav_status_t dvdnav_sector_search(dvdnav_t *this,
 
   result = dvdnav_get_position(this, &target, &length);
   if(!result) {
+    printerr("Cannot get current position");
     return DVDNAV_STATUS_ERR;
   }
 
