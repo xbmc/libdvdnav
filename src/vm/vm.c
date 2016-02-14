@@ -288,6 +288,15 @@ int ifoOpenNewVTSI(vm_t *vm, dvd_reader_t *dvd, int vtsN) {
     Log0(vm, "ifoRead_TITLE_VOBU_ADMAP vtsi failed");
     return 0;
   }
+  if (!ifoRead_VTS_TMAPT(vm->vtsi)) {
+    fprintf(MSG_OUT, "libdvdnav: ifoRead_VTS_TMAPT vtsi failed\n");
+    return 0;    
+  }
+  if (!ifoRead_TITLE_C_ADT(vm->vtsi)) {
+    fprintf(MSG_OUT, "libdvdnav: ifoRead_TITLE_C_ADT vtsi failed\n");
+    return 0;
+  }
+
   vm->state.vtsN = vtsN;
 
   return 1;
