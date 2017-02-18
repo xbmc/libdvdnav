@@ -38,6 +38,7 @@ dvdnav_part_play
 dvdnav_get_number_of_titles
 dvdnav_get_title_string
 dvdnav_open
+dvdnav_open_stream
 dvdnav_close
 dvdnav_wait_skip
 dvdnav_get_video_scale_permission
