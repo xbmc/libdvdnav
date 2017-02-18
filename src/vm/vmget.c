@@ -311,6 +311,8 @@ int vm_get_video_scale_permission(vm_t *vm) {
 }
 
 video_attr_t vm_get_video_attr(vm_t *vm) {
+  video_attr_t empty = {0,};
+
   switch ((vm->state).domain) {
   case DVD_DOMAIN_VTSTitle:
     return vm->vtsi->vtsi_mat->vts_video_attr;
@@ -322,9 +324,12 @@ video_attr_t vm_get_video_attr(vm_t *vm) {
   default:
     assert(0);
   }
+  return empty;
 }
 
 audio_attr_t vm_get_audio_attr(vm_t *vm, int streamN) {
+  audio_attr_t empty = {0,};
+
   switch ((vm->state).domain) {
   case DVD_DOMAIN_VTSTitle:
     return vm->vtsi->vtsi_mat->vts_audio_attr[streamN];
@@ -336,9 +341,12 @@ audio_attr_t vm_get_audio_attr(vm_t *vm, int streamN) {
   default:
     assert(0);
   }
+  return empty;
 }
 
 subp_attr_t vm_get_subp_attr(vm_t *vm, int streamN) {
+  subp_attr_t empty = {0,};
+
   switch ((vm->state).domain) {
   case DVD_DOMAIN_VTSTitle:
     return vm->vtsi->vtsi_mat->vts_subp_attr[streamN];
@@ -350,4 +358,5 @@ subp_attr_t vm_get_subp_attr(vm_t *vm, int streamN) {
   default:
     assert(0);
   }
+  return empty;
 }
