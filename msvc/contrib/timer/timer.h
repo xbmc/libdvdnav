@@ -1,5 +1,5 @@
 #include <time.h>
-#include <winsock.h>
+#include <winsock2.h>
 #include "pthread.h"
 
 #ifndef _ITIMER_
