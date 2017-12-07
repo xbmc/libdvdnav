@@ -27,6 +27,6 @@
 #ifndef _SYS_INTTYPES_H_
 #define _SYS_INTTYPES_H_
 
-#include <config.h>
+#include <stdint.h>
 
 #endif

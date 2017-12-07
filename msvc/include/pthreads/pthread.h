@@ -106,6 +106,9 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#ifndef WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN 
+#endif
 #include <windows.h>
 
 #ifndef NEED_FTIME
@@ -142,7 +145,7 @@ struct timespec {
 /*
  * note: ETIMEDOUT is correctly defined in winsock.h
  */
-#include <winsock.h>
+#include <winsock2.h>
 
 #ifdef NEED_ERRNO
 #  include "need_errno.h"
