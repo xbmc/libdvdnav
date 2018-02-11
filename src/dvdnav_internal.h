@@ -28,6 +28,9 @@
 #ifdef _WIN32
 
 /* pthread_mutex_* wrapper for win32 */
+#ifndef WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN 
+#endif
 #include <windows.h>
 #include <process.h>
 typedef CRITICAL_SECTION pthread_mutex_t;
@@ -43,7 +46,7 @@ static inline int _private_gettimeofday( struct timeval *tv, void *tz )
 {
   struct timeb t;
   ftime( &t );
-  tv->tv_sec = t.time;
+  tv->tv_sec = (long)t.time;
   tv->tv_usec = t.millitm * 1000;
   return 0;
 }
@@ -245,8 +248,8 @@ dvdnav_status_t dvdnav_set_state(dvdnav_t *this, dvd_state_t *save_state);
     do { if (this) snprintf(this->err_str, MAX_ERR_LEN, format, ## args); } while (0)
 #else
 #ifdef _MSC_VER
-#define printerrf(str) \
-    do { if (this) snprintf(this->err_str, MAX_ERR_LEN, str); } while (0)
+#define printerrf(...) \
+    do { if (this) snprintf(this->err_str, MAX_ERR_LEN, __VA_ARGS__); } while (0)
 #else
 #define printerrf(...) \
     do { if (this) snprintf(this->err_str, MAX_ERR_LEN, __VA_ARGS__); } while (0)
