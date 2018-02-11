@@ -5,6 +5,9 @@
  * Structures and types used to implement dlopen, dlsym, etc.
  * on Windows 95/NT.
  */
+#ifndef WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN 
+#endif
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
