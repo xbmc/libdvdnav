@@ -44,6 +44,7 @@ check_header_stdc()
 check_file_offset_bits()
 
 if(MSVC)
+  add_definitions(-DWIN32_LEAN_AND_MEAN)
   if (CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
     set(_WIN32_IE "0x0A00")
