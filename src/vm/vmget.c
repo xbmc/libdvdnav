@@ -144,7 +144,7 @@ int vm_get_subp_stream(vm_t *vm, int subpN, int mode) {
 
   if(subpN < 32) { /* a valid logical stream */
     /* Is this logical stream present */
-    if((vm->state).pgc->subp_control[subpN] & (1<<31)) {
+    if((vm->state).pgc->subp_control[subpN] & (1u<<31)) {
       if(source_aspect == 0) /* 4:3 */
         streamN = ((vm->state).pgc->subp_control[subpN] >> 24) & 0x1f;
       if(source_aspect == 3) /* 16:9 */
