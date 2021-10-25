@@ -32,7 +32,7 @@
 	accurate unix time with the data
 	accurate to the first call to get
 	of day and the resolution accurate
-	to ~ miliseconds.
+	to ~ milliseconds.
 */
 
 static time_t startseconds = 0;
@@ -41,7 +41,7 @@ int gettimeofday( struct timeval *tp, struct timezone *tzp )
 {
 	MMTIME mmtime;
 
-	// clock() returns time in miliseconds
+	// clock() returns time in milliseconds
 
 	if( !startseconds )
 		startseconds = time( 0 );
@@ -55,7 +55,7 @@ int gettimeofday( struct timeval *tp, struct timezone *tzp )
 };
 
 /*
-	These functions are designed to mimick
+	These functions are designed to mimic
 	a subset of itimer for use with the
 	alarm signal on win32. This is just
 	enough for xine to work.
@@ -65,14 +65,14 @@ static HANDLE sigalarm = 0;
 
 int setitimer( int which, struct itimerval * value, struct itimerval *ovalue )
 {
-	long int miliseconds;
+	long int milliseconds;
 
 	if( !sigalarm )
 		sigalarm = CreateEvent( 0, FALSE, TRUE, "SIGALARM" );
 
-    miliseconds = value->it_value.tv_usec / 1000;
+    milliseconds = value->it_value.tv_usec / 1000;
 
-	timeSetEvent( miliseconds, 0, ( LPTIMECALLBACK ) sigalarm, 0, TIME_PERIODIC | TIME_CALLBACK_EVENT_PULSE );
+	timeSetEvent( milliseconds, 0, ( LPTIMECALLBACK ) sigalarm, 0, TIME_PERIODIC | TIME_CALLBACK_EVENT_PULSE );
 
 	return 0;
 }

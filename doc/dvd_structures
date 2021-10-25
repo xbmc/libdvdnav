@@ -27,7 +27,7 @@ not know), but they are practically proven in libdvdnav.
          NAV packet used for menu button highlight and command information
          and to detect PTS discontinuities
    - ILVU (interleaved video unit)
-       * contains multiple VOBUs (ususally only one)
+       * contains multiple VOBUs (usually only one)
        * blocking multiple VOBUs of multiple interleaved MPEG streams for
          multiangle features
    - VOB (video object)
@@ -41,11 +41,11 @@ not know), but they are practically proven in libdvdnav.
        * all block addressing is done within the scope of the VOBS
 2. navigational structure - logical playback control
    - Cell
-       * smallest unit which is layed out in sequence
+       * smallest unit which is laid out in sequence
        * points to a first and last VOBU (by sector)
        * also points to the corresponding CellID and VOB_ID
        * smallest unit to execute VM commands (cell_post commands)
-       * smallest unit accesible by VM commands (apart from LinkRSM)
+       * smallest unit accessible by VM commands (apart from LinkRSM)
    - PG (program)
        * points to a Cell
        * usually the mapping between PG and Cells is 1:1, but not always

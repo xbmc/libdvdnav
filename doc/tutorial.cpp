@@ -25,7 +25,7 @@ DVD allows the user to jump about at will (much like those
 popular a while back).
 
 Such features are usually referred to under the moniker
-'interactive' by marketting people but you aren't in marketting
+'interactive' by marketing people but you aren't in marketing
 since you are reading the <tt>libdvdnav</tt> tutorial. We'll
 assume you actually want to know precisely what DVD can do.
 
@@ -91,7 +91,7 @@ multiple Cells per Part.
 A VOBU (<I>V</I>ideo <I>OB</I>ject <I>U</I>nit) is a small (typically a few
 seconds) of video. It must be a self contained 'Group of Pictures' which
 can be understood by the MPEG decoder. All seeking, jumping, etc is guaranteed
-to occurr at a VOBU boundary so that the decoder need not be restarted and that
+to occur at a VOBU boundary so that the decoder need not be restarted and that
 the location jumped to is always the start of a valid MPEG stream. For multiple-angle
 DVDs VOBUs for each angle can be interleaved into one Interleaved Video Unit (ILVU).
 In this case when the player get to the end of the VOBU for angle <i>n</i> instead of

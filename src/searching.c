@@ -279,7 +279,7 @@ dvdnav_status_t dvdnav_sector_search(dvdnav_t *this,
     target = length - offset;
     break;
    default:
-    /* Error occured */
+    /* Error occurred */
     printerr("Illegal seek mode.");
     pthread_mutex_unlock(&this->vm_lock);
     return DVDNAV_STATUS_ERR;
@@ -906,7 +906,7 @@ static int32_t dvdnav_admap_search(vobu_admap_t *admap, uint32_t admap_len,
   uint32_t cur_sector = 0;
   while (1) {
     cur_len = prv_len / 2;
-    /* need to add 1 when prv_len == 3 (cur_len shoud go to 2, not 1) */
+    /* need to add 1 when prv_len == 3 (cur_len should go to 2, not 1) */
     if (prv_len % 2 == 1) ++cur_len;
     cur_idx = prv_pos + (cur_len * adj);
     if       (cur_idx < 0)
@@ -947,7 +947,7 @@ static int32_t dvdnav_tmap_search(dvdnav_t *this,
   uint32_t cur_sector = 0;
   while (1) {
     cur_len = prv_len / 2;
-    /* need to add 1 when prv_len == 3 (cur_len shoud go to 2, not 1) */
+    /* need to add 1 when prv_len == 3 (cur_len should go to 2, not 1) */
     if (prv_len % 2 == 1) ++cur_len;
     cur_idx = prv_pos + (cur_len * adj);
     if      (cur_idx < 0)
@@ -1345,7 +1345,7 @@ dvdnav_status_t dvdnav_jump_to_sector_by_time(dvdnav_t *this,
   result = vm_jump_cell_block(this->vm, cell_data->idx, sector_off);
   pthread_mutex_lock(&this->vm_lock);
   this->cur_cell_time = 0;
-  if (result) { /* vm_jump_cell_block was sucessful */
+  if (result) { /* vm_jump_cell_block was successful */
     this->vm->hop_channel += HOP_SEEK;
   }
   pthread_mutex_unlock(&this->vm_lock);

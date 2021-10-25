@@ -21,7 +21,7 @@
  * by Matthew Grooms <elon@altavista.com>
  *
  * unistd.h - This is mostly a catch all header that maps standard unix
- *            libc calls to the equivelent win32 functions.
+ *            libc calls to the equivalent win32 functions.
  *
  */
 

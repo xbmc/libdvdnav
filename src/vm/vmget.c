@@ -217,7 +217,7 @@ void vm_get_angle_info(vm_t *vm, int *current, int *num_avail) {
 
   if((vm->state).domain == DVD_DOMAIN_VTSTitle) {
     title_info_t *title;
-    /* TTN_REG does not allways point to the correct title.. */
+    /* TTN_REG does not always point to the correct title.. */
     if((vm->state).TTN_REG > vm->vmgi->tt_srpt->nr_of_srpts)
       return;
     title = &vm->vmgi->tt_srpt->title[(vm->state).TTN_REG - 1];

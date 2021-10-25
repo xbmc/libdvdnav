@@ -504,7 +504,7 @@ static int32_t eval_jump_instruction(command_t* command, int32_t cond, link_t *r
   return 0;
 }
 
-/* Evaluate a set sytem register instruction
+/* Evaluate a set system register instruction
    May contain a link so return the same as eval_link */
 static int32_t eval_system_set(command_t* command, int32_t cond, link_t *return_values) {
   int32_t i;
@@ -708,7 +708,7 @@ static int32_t eval_command(uint8_t *bytes, registers_t* registers, link_t *retu
       if(res)
         res = -1;
       break;
-    case 6: /*  Compare -> Set, allways Link Sub-Instruction */
+    case 6: /*  Compare -> Set, always Link Sub-Instruction */
       /* FIXME: These are wrong. Need to be updated from vmcmd.c */
       cond = eval_if_version_4(&command);
       eval_set_version_2(&command, cond);

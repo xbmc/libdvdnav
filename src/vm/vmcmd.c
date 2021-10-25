@@ -484,7 +484,7 @@ void vm_print_mnemonic(vm_cmd_t *vm_command)  {
         print_jump_instruction(&command);
       } else {
         print_if_version_1(&command);
-        print_link_instruction(&command, 0); /*  must be pressent */
+        print_link_instruction(&command, 0); /*  must be present */
       }
       break;
     case 2: /*  Set System Parameters instructions */

@@ -279,7 +279,7 @@ dvdnav_status_t dvdnav_reset(dvdnav_t *this) {
   pthread_mutex_lock(&this->vm_lock);
 
 #ifdef LOG_DEBUG
-  Log3(this, "reseting vm");
+  Log3(this, "resetting vm");
 #endif
   if(!vm_reset(this->vm, NULL, NULL, NULL)) {
     printerr("Error restarting the VM.");
@@ -476,7 +476,7 @@ static int32_t dvdnav_get_vobu(dvdnav_t *this, dsi_t *nav_dsi, pci_t *nav_pci, d
  * These are the main get_next_block function which actually get the media stream video and audio etc.
  *
  * There are two versions: The second one is using the zero-copy read ahead cache and therefore
- * hands out pointers targetting directly into the cache.
+ * hands out pointers targeting directly into the cache.
  * The first one uses a memcopy to fill this cache block into the application provided memory.
  * The benefit of this first one is that no special memory management is needed. The application is
  * the only one responsible of allocating and freeing the memory associated with the pointer.
@@ -808,7 +808,7 @@ dvdnav_status_t dvdnav_get_next_cache_block(dvdnav_t *this, uint8_t **buf,
     Log3(this, "SPU_STREAM_CHANGE stream_id_pan_scan=%d",stream_change->physical_pan_scan);
     Log3(this, "SPU_STREAM_CHANGE returning DVDNAV_STATUS_OK");
 #endif
-    /* This is not realy the right place to do this. FOSL_BTNN should set the register
+    /* This is not really the right place to do this. FOSL_BTNN should set the register
      * at HLI_S_PTM rather than when we enter the SPU. As well we should activate FOAC_BTNN
      * at HLI_E_PTM
      */

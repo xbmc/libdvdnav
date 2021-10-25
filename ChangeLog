@@ -62,12 +62,12 @@ libdvdnav (4.2.0)
     more reliable playback
   * fixed deadlock between dvdnav_reset() and dvd_clear()
   * fixed pthread_mutex_destroy macro for Win32
-  * fixed numerous assertion failures occuring when playing DVDs with
+  * fixed numerous assertion failures occurring when playing DVDs with
     new "copy protection" schemes
   * fixed forward seeks to always move forward
 
 libdvdnav (4.1.3)
-  * an embarassing amount of fixes regarding potential memory and resource leaks
+  * an embarrassing amount of fixes regarding potential memory and resource leaks
     (patches contributed by Erik Hovland)
   * added dvdread-config (dvdnav-config's younger brother)
   * added pkg-config support
@@ -92,7 +92,7 @@ libdvdnav (4.1.1)
     dvdnav_{title,part}_play() works again
   * removed wrong SPU stream change event filter
     (fixes unwanted subtitles in the trailer of "Girl, interrupted", RC2)
-  * fixed error "Expected NAV packet but none found." occuring sometimes
+  * fixed error "Expected NAV packet but none found." occurring sometimes
     on resume from menu
 
 libdvdnav (0.1.10)
@@ -126,7 +126,7 @@ libdvdnav (0.1.6) unstable; urgency=low
   * method to try-run VM operations, now used for safer chapter skipping and menu jumps
   * fixed detection of current PTT to not assume a 1:1 mapping between PTTs and PGs
   * releasing stills when jumping to menu fixes some state inconsistencies
-  * do not assume PGs to be physically layed out in sequence on the disc
+  * do not assume PGs to be physically laid out in sequence on the disc
   * optional PGC based seeking
   * new event on cell changes for timing info
 
