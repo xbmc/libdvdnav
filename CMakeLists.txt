@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(DVDNAV_VERSION_MAJOR 5)
-set(DVDNAV_VERSION_MINOR 0)
-set(DVDNAV_VERSION_MICRO 4)
+set(DVDNAV_VERSION_MAJOR 6)
+set(DVDNAV_VERSION_MINOR 1)
+set(DVDNAV_VERSION_MICRO 1)
 set(DVDNAV_VERSION "${DVDNAV_VERSION_MAJOR}.${DVDNAV_VERSION_MINOR}.${DVDNAV_VERSION_MICRO}")
 set(PACKAGE_VERSION ${DVDNAV_VERSION})
 
@@ -85,6 +85,8 @@ add_library(${PROJECT_NAME} SHARED
   src/dvdnav.c
   src/dvdnav_internal.h
   src/highlight.c
+  src/logger.c
+  src/logger.h
   src/navigation.c
   src/read_cache.c
   src/read_cache.h
