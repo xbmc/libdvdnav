@@ -37,7 +37,6 @@
 
 #include "dvd_reader.h"
 #include "ifo_read.h"
-#include "ifo_types.h"
 
 /* Uncomment for VM command tracing */
 /* #define TRACE */

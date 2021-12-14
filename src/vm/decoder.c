@@ -33,7 +33,6 @@
 #include <assert.h>
 
 #include <dvdread/nav_types.h>
-#include <dvdread/ifo_types.h> /* vm_cmd_t */
 
 #include "dvdnav/dvdnav.h"
 #include "decoder.h"

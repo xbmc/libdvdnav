@@ -38,7 +38,6 @@
 #include "dvdnav/dvdnav.h"
 #include <dvdread/dvd_reader.h>
 #include <dvdread/nav_types.h>
-#include <dvdread/ifo_types.h> /* For vm_cmd_t */
 #include "vm/decoder.h"
 #include "vm/vm.h"
 #include "vm/getset.h"

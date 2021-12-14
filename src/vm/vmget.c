@@ -32,7 +32,6 @@
 #include <stdlib.h>
 
 #include <dvdread/nav_types.h>
-#include <dvdread/ifo_types.h>
 #include <dvdread/ifo_read.h>
 #include "dvdnav/dvdnav.h"
 
