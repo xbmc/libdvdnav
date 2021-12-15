@@ -132,7 +132,7 @@ dvdnav_status_t dvdnav_time_search(dvdnav_t *this,
   uint64_t length = 0;
   uint32_t first_cell_nr, last_cell_nr, cell_nr;
   int32_t found;
-  cell_playback_t *cell;
+  const cell_playback_t *cell;
   dvd_state_t *state;
 
   if(this->position_current.still != 0) {
@@ -218,7 +218,7 @@ dvdnav_status_t dvdnav_sector_search(dvdnav_t *this,
   uint32_t first_cell_nr, last_cell_nr, cell_nr;
   int32_t found;
   int forward = 0;
-  cell_playback_t *cell;
+  const cell_playback_t *cell;
   dvd_state_t *state;
   dvdnav_status_t result;
 
@@ -536,7 +536,7 @@ dvdnav_status_t dvdnav_get_position(dvdnav_t *this, uint32_t *pos,
                                     uint32_t *len) {
   uint32_t cur_sector;
   int32_t cell_nr, first_cell_nr, last_cell_nr;
-  cell_playback_t *cell;
+  const cell_playback_t *cell;
   dvd_state_t *state;
 
   if(!this->started) {
@@ -604,8 +604,8 @@ dvdnav_status_t dvdnav_get_position_in_title(dvdnav_t *this,
   uint32_t cur_sector;
   uint32_t first_cell_nr;
   uint32_t last_cell_nr;
-  cell_playback_t *first_cell;
-  cell_playback_t *last_cell;
+  const cell_playback_t *first_cell;
+  const cell_playback_t *last_cell;
   dvd_state_t *state;
 
   state = &(this->vm->state);
@@ -637,11 +637,11 @@ dvdnav_status_t dvdnav_get_position_in_title(dvdnav_t *this,
 uint32_t dvdnav_describe_title_chapters(dvdnav_t *this, int32_t title, uint64_t **times, uint64_t *duration) {
   int32_t retval=0;
   uint16_t parts, i;
-  title_info_t *ptitle = NULL;
-  ptt_info_t *ptt = NULL;
+  const title_info_t *ptitle = NULL;
+  const ptt_info_t *ptt = NULL;
   ifo_handle_t *ifo = NULL;
-  pgc_t *pgc;
-  cell_playback_t *cell;
+  const pgc_t *pgc;
+  const cell_playback_t *cell;
   uint64_t length, *tmp=NULL;
 
   *times = NULL;
@@ -791,14 +791,14 @@ static vobu_admap_t* dvdnav_admap_get(dvdnav_t *this, dvd_state_t *state,
 }
 
 /* Get a tmap, tmap_len and tmap_interval */
-static vts_tmap_t* dvdnav_tmap_get(dvdnav_t *this, dvd_state_t *state,
+static const vts_tmap_t* dvdnav_tmap_get(dvdnav_t *this, dvd_state_t *state,
             int32_t *tmap_len, int32_t *tmap_interval) {
   int32_t domain;
   ifo_handle_t *ifo = NULL;
   vts_tmapt_t *tmapt = NULL;
   uint16_t tmap_count = 0;
   int32_t pgcN = 0;
-  vts_tmap_t *tmap = NULL;
+  const vts_tmap_t *tmap = NULL;
   int32_t result = 0;
 
   domain = state->domain;
@@ -878,7 +878,7 @@ static vts_tmap_t* dvdnav_tmap_get(dvdnav_t *this, dvd_state_t *state,
 
 /* Get a sector from a tmap */
 static int32_t dvdnav_tmap_get_entry(dvdnav_t *this,
-                                     vts_tmap_t *tmap, uint16_t tmap_len,
+                                     const vts_tmap_t *tmap, uint16_t tmap_len,
                                      int32_t idx, uint32_t *sector) {
   /* tmaps start at idx 0 which represents a sector at time 1 * tmap_interval
    * this creates a "fake" tmap index at idx -1 for sector 0 */
@@ -936,7 +936,7 @@ static int32_t dvdnav_admap_search(vobu_admap_t *admap, uint32_t admap_len,
 
 /* Do a binary search for the earlier tmap entry near find_sector */
 static int32_t dvdnav_tmap_search(dvdnav_t *this,
-                                  vts_tmap_t *tmap, uint32_t tmap_len,
+                                  const vts_tmap_t *tmap, uint32_t tmap_len,
             uint32_t find_sector, int32_t *tmap_idx, uint32_t *sector) {
   int32_t adj = 1;
   int32_t prv_pos = 0;
@@ -992,9 +992,9 @@ static int32_t dvdnav_cell_find(dvdnav_t *this, dvd_state_t *state,
   uint32_t cells_bgn = 0;
   uint32_t cells_end = 0;
   uint32_t cell_idx = 0;
-  pgc_t *pgc = NULL;
+  const pgc_t *pgc = NULL;
   int pgN = 0;
-  cell_playback_t *cell = NULL;
+  const cell_playback_t *cell = NULL;
   int found = 0;
 
   pgc = state->pgc;

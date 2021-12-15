@@ -741,7 +741,7 @@ int vm_jump_resume(vm_t *vm) {
   return !!process_command(vm, link_values);
 }
 
-int vm_exec_cmd(vm_t *vm, vm_cmd_t *cmd) {
+int vm_exec_cmd(vm_t *vm, const vm_cmd_t *cmd) {
   link_t link_values;
 
   if(vmEval_CMD(cmd, 1, &vm->state.registers, &link_values))

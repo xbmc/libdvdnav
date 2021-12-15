@@ -643,7 +643,7 @@ static void eval_set_version_2(command_t* command, int32_t cond) {
 /* Evaluate a command
    returns row number of goto, 0 if no goto, -1 if link.
    Link command in return_values */
-static int32_t eval_command(uint8_t *bytes, registers_t* registers, link_t *return_values) {
+static int32_t eval_command(const uint8_t *bytes, registers_t* registers, link_t *return_values) {
   int32_t cond, res = 0;
   command_t command;
   command.instruction =( (uint64_t) bytes[0] << 56 ) |
@@ -731,7 +731,7 @@ static int32_t eval_command(uint8_t *bytes, registers_t* registers, link_t *retu
 }
 
 /* Evaluate a set of commands in the given register set (which is modified) */
-int32_t vmEval_CMD(vm_cmd_t commands[], int32_t num_commands,
+int32_t vmEval_CMD(const vm_cmd_t commands[], int32_t num_commands,
                registers_t *registers, link_t *return_values) {
   int32_t i = 0;
   int32_t total = 0;

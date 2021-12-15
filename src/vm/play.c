@@ -261,7 +261,7 @@ link_t play_Cell(vm_t *vm) {
 }
 
 link_t play_Cell_post(vm_t *vm) {
-  cell_playback_t *cell;
+  const cell_playback_t *cell;
 
 #ifdef TRACE
   Log3(vm, "play_Cell_post: (vm->state).cellN (%i)", (vm->state).cellN);

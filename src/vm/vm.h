@@ -31,7 +31,7 @@ typedef struct {
 
   DVDDomain_t  domain;
   int       vtsN;         /* 0 is vmgm? */
-  pgc_t    *pgc;          /* either this or 'int pgcN' is enough? */
+  const pgc_t  *pgc;    /* either this or 'int pgcN' is enough? */
   int       pgcN;         /* but provide pgcN for quick lookup */
   int       pgN;          /* is this needed? can always fid pgN from cellN? */
   int       cellN;
@@ -141,7 +141,7 @@ int vm_jump_prev_pg(vm_t *vm);
 int vm_jump_up(vm_t *vm);
 int vm_jump_menu(vm_t *vm, DVDMenuID_t menuid);
 int vm_jump_resume(vm_t *vm);
-int vm_exec_cmd(vm_t *vm, vm_cmd_t *cmd);
+int vm_exec_cmd(vm_t *vm, const vm_cmd_t *cmd);
 
 /* getting information */
 int vm_get_current_menu(vm_t *vm, int *menuid);

@@ -45,7 +45,7 @@
 /* getting information */
 
 int vm_get_current_menu(vm_t *vm, int *menuid) {
-  pgcit_t* pgcit;
+  const pgcit_t* pgcit;
   int pgcn;
   pgcn = (vm->state).pgcN;
   pgcit = get_PGCIT(vm);
@@ -216,7 +216,7 @@ void vm_get_angle_info(vm_t *vm, int *current, int *num_avail) {
   *current = 1;
 
   if((vm->state).domain == DVD_DOMAIN_VTSTitle) {
-    title_info_t *title;
+    const title_info_t *title;
     /* TTN_REG does not always point to the correct title.. */
     if((vm->state).TTN_REG > vm->vmgi->tt_srpt->nr_of_srpts)
       return;

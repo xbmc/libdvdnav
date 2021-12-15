@@ -145,7 +145,7 @@ int set_MENU(vm_t *vm, int menu) {
 }
 
 int set_PGCN(vm_t *vm, int pgcN) {
-  pgcit_t *pgcit;
+  const pgcit_t *pgcit;
 
   pgcit = get_PGCIT(vm);
   if (pgcit == NULL)
@@ -249,7 +249,7 @@ int get_TT(vm_t *vm, int vtsN, int vts_ttn) {
  */
 int get_ID(vm_t *vm, int id) {
   int pgcN, i;
-  pgcit_t *pgcit;
+  const pgcit_t *pgcit;
 
   /* Relies on state to get the correct pgcit. */
   pgcit = get_PGCIT(vm);
@@ -288,7 +288,7 @@ int get_ID(vm_t *vm, int id) {
 
 /* FIXME: we have a pgcN member in the vm's state now, so this should be obsolete */
 int get_PGCN(vm_t *vm) {
-  pgcit_t *pgcit;
+  const pgcit_t *pgcit;
   int pgcN = 1;
 
   if ((vm->state).pgc == NULL) {
@@ -311,7 +311,7 @@ int get_PGCN(vm_t *vm) {
   return 0; /*  error */
 }
 
-pgcit_t* get_MENU_PGCIT(vm_t *vm, ifo_handle_t *h, uint16_t lang) {
+const pgcit_t* get_MENU_PGCIT(vm_t *vm, ifo_handle_t *h, uint16_t lang) {
   int i;
 
   if(h == NULL || h->pgci_ut == NULL) {
@@ -347,8 +347,8 @@ pgcit_t* get_MENU_PGCIT(vm_t *vm, ifo_handle_t *h, uint16_t lang) {
 }
 
 /* Uses state to decide what to return */
-pgcit_t* get_PGCIT(vm_t *vm) {
-  pgcit_t *pgcit = NULL;
+const pgcit_t* get_PGCIT(vm_t *vm) {
+  const pgcit_t *pgcit = NULL;
 
   switch ((vm->state).domain) {
   case DVD_DOMAIN_VTSTitle:

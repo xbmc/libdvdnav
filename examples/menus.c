@@ -228,7 +228,7 @@ int main(int argc, char **argv) {
 	  printf("Found %i DVD menu buttons...\n", pci->hli.hl_gi.btn_ns);
 
 	  for (button = 0; button < pci->hli.hl_gi.btn_ns; button++) {
-	    btni_t *btni = &(pci->hli.btnit[button]);
+	    const btni_t *btni = &(pci->hli.btnit[button]);
 	    printf("Button %i top-left @ (%i,%i), bottom-right @ (%i,%i)\n",
 		    button + 1, btni->x_start, btni->y_start,
 		    btni->x_end, btni->y_end);

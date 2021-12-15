@@ -158,7 +158,7 @@ typedef struct {
 typedef struct {
   vobu_admap_t        *admap;
   int32_t             admap_len;
-  vts_tmap_t          *tmap;
+  const vts_tmap_t    *tmap;
   int32_t             tmap_len;
   int32_t             tmap_interval;
 } dvdnav_jump_args_t;
@@ -224,7 +224,7 @@ struct dvdnav_s {
 /** HELPER FUNCTIONS **/
 
 /* converts a dvd_time_t to PTS ticks */
-int64_t dvdnav_convert_time(dvd_time_t *time);
+int64_t dvdnav_convert_time(const dvd_time_t *time);
 
 /** USEFUL MACROS **/
 

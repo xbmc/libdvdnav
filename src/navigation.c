@@ -65,7 +65,7 @@ dvdnav_status_t dvdnav_get_number_of_titles(dvdnav_t *this, int32_t *titles) {
 }
 
 static dvdnav_status_t get_title_by_number(dvdnav_t *this, int32_t title,
-                                           title_info_t **pp_title)
+                                           const title_info_t **pp_title)
 {
     int32_t titlescount;
     dvdnav_status_t status = dvdnav_get_number_of_titles(this, &titlescount);
@@ -83,7 +83,7 @@ static dvdnav_status_t get_title_by_number(dvdnav_t *this, int32_t title,
 }
 
 dvdnav_status_t dvdnav_get_number_of_parts(dvdnav_t *this, int32_t title, int32_t *parts) {
-  title_info_t *info;
+  const title_info_t *info;
   dvdnav_status_t status = get_title_by_number(this, title, &info);
   if(status == DVDNAV_STATUS_OK)
       (*parts) = info->nr_of_ptts;
@@ -91,7 +91,7 @@ dvdnav_status_t dvdnav_get_number_of_parts(dvdnav_t *this, int32_t title, int32_
 }
 
 dvdnav_status_t dvdnav_get_number_of_angles(dvdnav_t *this, int32_t title, int32_t *angles) {
-    title_info_t *info;
+    const title_info_t *info;
     dvdnav_status_t status = get_title_by_number(this, title, &info);
     if(status == DVDNAV_STATUS_OK)
         (*angles) = info->nr_of_angles;
