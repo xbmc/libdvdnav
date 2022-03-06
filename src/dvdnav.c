@@ -1111,6 +1111,54 @@ int8_t dvdnav_get_audio_logical_stream(dvdnav_t *this, uint8_t audio_num) {
   return retval;
 }
 
+int8_t dvdnav_get_number_of_streams(dvdnav_t *this, dvdnav_stream_type_t stream_type) {
+
+  if (stream_type != DVD_SUBTITLE_STREAM && stream_type != DVD_AUDIO_STREAM) {
+    printerr("Invalid provided stream type");
+    return -1;
+  }
+
+  if (!this->started) {
+    printerr("Virtual DVD machine not started.");
+    return -1;
+  }
+
+  pthread_mutex_lock(&this->vm_lock);
+  if (!this->vm->state.pgc) {
+    printerr("No current PGC.");
+    pthread_mutex_unlock(&this->vm_lock);
+    return -1;
+  }
+
+  if (this->vm->state.domain != DVD_DOMAIN_VTSTitle &&
+      this->vm->state.domain != DVD_DOMAIN_VTSMenu)
+  {
+    printerr("Invalid domain provided");
+    pthread_mutex_unlock(&this->vm_lock);
+    return -1;
+  }
+
+  int8_t count = 0;
+  switch (stream_type) {
+  case DVD_SUBTITLE_STREAM:
+    for (int i = 0; i < 32; i++)
+    {
+      if (this->vm->state.pgc->subp_control[i] & (1<<31))
+        count++;
+    }
+    break;
+  case DVD_AUDIO_STREAM:
+    for (int i = 0; i < 8; i++)
+    {
+      if (this->vm->state.pgc->audio_control[i] & (1<<15))
+        count++;
+    }
+    break;
+  }
+  pthread_mutex_unlock(&this->vm_lock);
+  return count;
+}
+
 dvdnav_status_t dvdnav_get_audio_attr(dvdnav_t *this, uint8_t audio_num, audio_attr_t *audio_attr) {
   if(!this->started) {
     printerr("Virtual DVD machine not started.");

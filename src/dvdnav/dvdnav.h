@@ -673,6 +673,11 @@ int8_t dvdnav_get_active_spu_stream(dvdnav_t *self);
  */
 user_ops_t dvdnav_get_restrictions(dvdnav_t *self);
 
+/*
+ * Returns the number of streams provided its type (e.g. subtitles, audio, etc)
+ */
+int8_t dvdnav_get_number_of_streams(dvdnav_t *self, dvdnav_stream_type_t stream_type);
+
 
 /*********************************************************************
  * multiple angles                                                   *
