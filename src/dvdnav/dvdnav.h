@@ -279,6 +279,19 @@ uint32_t dvdnav_get_next_still_flag(dvdnav_t *self);
  */
 dvdnav_status_t dvdnav_stop(dvdnav_t *self);
 
+/*
+ * Returns the region mask (bit 0 set implies region 1, bit 1 set implies
+ * region 2, etc) reported by the dvd disc being played.
+ *
+ * Note this has no relation with the region setting of the DVD drive.
+ * Old DVD drives (RPC-I) used to delegate most of the RCE handling to the CPU and
+ * will actually call the virtual machine (VM) for its region setting. In those cases,
+ * changing the VM region mask via dvdnav_set_region_mask() will circunvent
+ * the region protection scheme. This is no longer the case with more recent (RPC-II) drives
+ * as RCE is handled internally by the drive firmware.
+ *
+ */
+dvdnav_status_t dvdnav_get_disk_region_mask(dvdnav_t *self, int32_t *region_mask);
 
 /*********************************************************************
  * title/part navigation                                             *

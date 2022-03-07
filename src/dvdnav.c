@@ -1335,6 +1335,19 @@ dvdnav_status_t dvdnav_get_angle_info(dvdnav_t *this, int32_t *current_angle,
   return DVDNAV_STATUS_OK;
 }
 
+dvdnav_status_t dvdnav_get_disk_region_mask(dvdnav_t *this, int32_t *region_mask) {
+  pthread_mutex_lock(&this->vm_lock);
+  if (!this->vm || !this->vm->vmgi || !this->vm->vmgi->vmgi_mat) {
+    printerr("Bad VM state.");
+    pthread_mutex_unlock(&this->vm_lock);
+    return DVDNAV_STATUS_ERR;
+  }
+
+  (*region_mask) = ((this->vm->vmgi->vmgi_mat->vmg_category >> 16) & 0xff) ^ 0xff;
+  pthread_mutex_unlock(&this->vm_lock);
+  return DVDNAV_STATUS_OK;
+}
+
 pci_t* dvdnav_get_current_nav_pci(dvdnav_t *this) {
   if(!this) return 0;
   return &this->pci;
