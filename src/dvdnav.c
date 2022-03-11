@@ -1252,6 +1252,29 @@ int8_t dvdnav_get_active_spu_stream(dvdnav_t *this) {
   return retval;
 }
 
+dvdnav_status_t dvdnav_toggle_spu_stream(dvdnav_t *this, uint8_t visibility) {
+  if(!this->started) {
+    printerr("Virtual DVD machine not started.");
+    return DVDNAV_STATUS_ERR;
+  }
+
+  pthread_mutex_lock(&this->vm_lock);
+  switch(visibility) {
+  case 0: /* disable */
+    this->vm->state.SPST_REG &= ~0x40;
+    break;
+  case 1:  /* enable */
+    this->vm->state.SPST_REG |= 0x40;
+    break;
+  default:
+    printerr("Invalid provided enabled_flag value");
+    pthread_mutex_unlock(&this->vm_lock);
+    return DVDNAV_STATUS_ERR;
+  }
+  pthread_mutex_unlock(&this->vm_lock);
+  return DVDNAV_STATUS_OK;
+}
+
 static int8_t dvdnav_is_domain(dvdnav_t *this, DVDDomain_t domain) {
   int8_t        retval;
 
