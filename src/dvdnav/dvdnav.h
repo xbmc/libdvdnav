@@ -703,6 +703,14 @@ int8_t dvdnav_get_number_of_streams(dvdnav_t *self, dvdnav_stream_type_t stream_
  */
 dvdnav_status_t dvdnav_toggle_spu_stream(dvdnav_t *self, uint8_t visibility);
 
+/*
+ * Set the given stream id and stream type as active
+ * stream_num - the physical index of the stream
+ * stream_type - the stream type (audio or subtitles)
+ */
+dvdnav_status_t dvdnav_set_active_stream(dvdnav_t *self, uint8_t stream_num,
+                                        dvdnav_stream_type_t stream_type);
+
 /*********************************************************************
  * multiple angles                                                   *
  *********************************************************************/

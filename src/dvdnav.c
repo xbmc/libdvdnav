@@ -1252,6 +1252,57 @@ int8_t dvdnav_get_active_spu_stream(dvdnav_t *this) {
   return retval;
 }
 
+dvdnav_status_t dvdnav_set_active_stream(dvdnav_t *this, uint8_t stream_num, dvdnav_stream_type_t stream_type) {
+   if (stream_type != DVD_SUBTITLE_STREAM && stream_type != DVD_AUDIO_STREAM) {
+    printerr("Invalid provided stream type");
+    return DVDNAV_STATUS_ERR;
+  }
+
+  if (!this->started) {
+    printerr("Virtual DVD machine not started.");
+    return DVDNAV_STATUS_ERR;
+  }
+
+  pthread_mutex_lock(&this->vm_lock);
+  if (!this->vm->state.pgc) {
+    printerr("No current PGC.");
+    pthread_mutex_unlock(&this->vm_lock);
+    return DVDNAV_STATUS_ERR;
+  }
+
+  if (this->vm->state.domain != DVD_DOMAIN_VTSTitle &&
+      this->vm->state.domain != DVD_DOMAIN_VTSMenu)
+  {
+    printerr("Invalid active domain");
+    pthread_mutex_unlock(&this->vm_lock);
+    return DVDNAV_STATUS_ERR;
+  }
+
+  switch (stream_type) {
+  case DVD_SUBTITLE_STREAM:
+    if (stream_num >= 32 ||
+        !(this->vm->state.pgc->subp_control[stream_num] & (1 << 31))) {
+      printerr("Invalid stream index not allowed");
+      pthread_mutex_unlock(&this->vm_lock);
+      return DVDNAV_STATUS_ERR;
+    }
+    // set state without changing the current visibility
+    this->vm->state.SPST_REG = stream_num | (this->vm->state.SPST_REG & 0x40);
+    break;
+  case DVD_AUDIO_STREAM:
+    if (stream_num >= 8 ||
+        !(this->vm->state.pgc->audio_control[stream_num] & (1 << 15))) {
+      printerr("Invalid stream index not allowed");
+      pthread_mutex_unlock(&this->vm_lock);
+      return DVDNAV_STATUS_ERR;
+    }
+    this->vm->state.AST_REG = stream_num;
+    break;
+  }
+  pthread_mutex_unlock(&this->vm_lock);
+  return DVDNAV_STATUS_OK;
+}
+
 dvdnav_status_t dvdnav_toggle_spu_stream(dvdnav_t *this, uint8_t visibility) {
   if(!this->started) {
     printerr("Virtual DVD machine not started.");
