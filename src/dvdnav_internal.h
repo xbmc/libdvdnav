@@ -43,7 +43,7 @@ static inline int _private_gettimeofday( struct timeval *tv, void *tz )
 {
   struct timeb t;
   ftime( &t );
-  tv->tv_sec = t.time;
+  tv->tv_sec = (long)t.time;
   tv->tv_usec = t.millitm * 1000;
   return 0;
 }
@@ -232,13 +232,8 @@ int64_t dvdnav_convert_time(const dvd_time_t *time);
 #define printerrf(format, args...) \
     do { if (this) snprintf(this->err_str, MAX_ERR_LEN, format, ## args); } while (0)
 #else
-#ifdef _MSC_VER
-#define printerrf(str) \
-    do { if (this) snprintf(this->err_str, MAX_ERR_LEN, str); } while (0)
-#else
 #define printerrf(...) \
     do { if (this) snprintf(this->err_str, MAX_ERR_LEN, __VA_ARGS__); } while (0)
-#endif /* _MSC_VER */
 #endif
 #define printerr(str) \
     do { if (this) strncpy(this->err_str, str, MAX_ERR_LEN - 1); } while (0)

@@ -34,6 +34,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include <stdint.h>
 #include <sys/time.h>
 #include "dvdnav/dvdnav.h"
 #include <dvdread/dvd_reader.h>
