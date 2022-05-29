@@ -29,6 +29,7 @@
 #include <limits.h>
 #include <string.h>
 #include <sys/time.h>
+#include <stdint.h>
 #include <dvdread/nav_types.h>
 #include "dvdnav/dvdnav.h"
 #include "vm/decoder.h"

@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <limits.h>
 #include <string.h>  /* For memset */
 #include <sys/time.h>
