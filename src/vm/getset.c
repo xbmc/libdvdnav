@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
+#include <stdint.h>
 
 #include <dvdread/nav_types.h>
 #include <dvdread/ifo_read.h>

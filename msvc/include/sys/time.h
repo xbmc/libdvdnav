@@ -25,4 +25,9 @@
  *				timer functions.
  */
 
+#pragma once
 #include <time.h>
+
+#ifdef _MSC_VER
+#include <WinSock2.h>
+#endif

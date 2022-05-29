@@ -30,6 +30,7 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include "version.h"
 #include <dvdnav/dvd_types.h>
 #include <dvdread/dvd_filesystem.h>

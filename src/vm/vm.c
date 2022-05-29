@@ -37,6 +37,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #include <ctype.h>
+#include <stdint.h>
 
 #include <dvdread/nav_types.h>
 #include <dvdread/ifo_read.h>
