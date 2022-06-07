@@ -33,7 +33,7 @@ numerous crashes and maintain a correct player-agnostic library for DVD playback
 This fork will try to maintain correct authorship tracking, by using git and a
 proper history.
 
-## Liscence
+## License
 
 Libdvdnav is completely licensed under GPL. You may use it at wish within the
 bounds of this license. See the [here](https://code.videolan.org/videolan/libdvdnav/-/blob/master/COPYING) for a copy of the GPL.
