@@ -59,8 +59,8 @@ dnl    are platform dependent
 dnl  * in Linux, the library will be named
 dnl    libname.so.(DVDNAV_LT_CURRENT - DVDNAV_LT_AGE).DVDNAV_LT_AGE.DVDNAV_LT_REVISION
 
-DVDNAV_LT_CURRENT=7
-DVDNAV_LT_AGE=3
+DVDNAV_LT_CURRENT=8
+DVDNAV_LT_AGE=4
 DVDNAV_LT_REVISION=0
 
 AC_SUBST(DVDNAV_LT_CURRENT)
