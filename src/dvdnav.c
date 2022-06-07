@@ -1426,7 +1426,7 @@ user_ops_t dvdnav_get_restrictions(dvdnav_t* this) {
 
   ops.ops_int = 0;
 
-  if(!this->started) {
+  if(!this || !this->started) {
     printerr("Virtual DVD machine not started.");
     return ops.ops_struct;
   }
