@@ -955,6 +955,28 @@ dvdnav_status_t dvdnav_get_serial_string(dvdnav_t *this, const char **serial_str
   return DVDNAV_STATUS_OK;
 }
 
+const char * dvdnav_get_volid_string(dvdnav_t *this) {
+  if (!this || !this->vm || !this->vm->dvd) {
+    printerr("Invalid state, vm or reader not available.");
+    return NULL;
+  }
+
+  char *volid_str = malloc(33);
+  if (volid_str == NULL) {
+    printerr("Insufficient memory available.");
+    return NULL;
+  }
+
+  if (DVDUDFVolumeInfo(this->vm->dvd, volid_str, 32, NULL, 0) == -1) {
+    if (DVDISOVolumeInfo(this->vm->dvd, volid_str, 33, NULL, 0) == -1) {
+      printerr("Failed to obtain volume id.");
+      free(volid_str);
+      return NULL;
+    }
+  }
+  return volid_str;
+}
+
 uint8_t dvdnav_get_video_aspect(dvdnav_t *this) {
   uint8_t         retval;
 

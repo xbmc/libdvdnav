@@ -588,7 +588,7 @@ dvdnav_status_t dvdnav_spu_language_select(dvdnav_t *self,
  * this is a descriptive string such as `THE_MATRIX' but sometimes is singularly
  * uninformative such as `PDVD-011421'. Some DVD authors even forget to set this,
  * so you may also read the default of the authoring software they used, like
- * `DVDVolume'.
+ * `DVDVolume' (see also dvdnav_get_volid_string).
  */
 dvdnav_status_t dvdnav_get_title_string(dvdnav_t *self, const char **title_str);
 
@@ -598,6 +598,19 @@ dvdnav_status_t dvdnav_get_title_string(dvdnav_t *self, const char **title_str);
  * title string.
  */
 dvdnav_status_t dvdnav_get_serial_string(dvdnav_t *self, const char **serial_str);
+
+/*
+ * Returns the VolumeIdentifier of the disc or NULL if it could
+ * not be obtained. The VolumeIdentifier might be latin-1 encoded
+ * (8bit unicode) null terminated and max 32 bytes (including '\0');
+ * or coded with '0-9','A-Z','_' null terminated and max 33 bytes
+ * (including '\0').
+ * See also dvdnav_get_title_string
+ *
+ * Note: The string is malloc'd so caller has to free() the returned
+ * string when done with it.
+ */
+const char * dvdnav_get_volid_string(dvdnav_t *self);
 
 /*
  * Get video aspect code.
