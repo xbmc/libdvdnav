@@ -432,6 +432,19 @@ dvdnav_status_t dvdnav_time_search(dvdnav_t *self,
                                    uint64_t time);
 
 /*
+ * Find the nearest vobu and jump to it
+ *
+ * Alternative to dvdnav_time_search (see full documentation on searching.jump_to_time.readme)
+ * Jumps to the provided PTS (which is defined as time_in_ms * 90). mode means the navigation mode,
+ * currently only the Default (0) is implemented:
+ *  0: Default. Jump to a time which may be either <> time_in_pts_ticks
+ *  1: After. Always jump to a time that is > time_in_pts_ticks
+ * -1: Before. Always jump to a time that is < time_in_pts_ticks
+ */
+dvdnav_status_t dvdnav_jump_to_sector_by_time(dvdnav_t *self,
+                                              uint64_t time_in_pts_ticks, int32_t mode);
+
+/*
  * Stop playing current position and play the "GoUp"-program chain.
  * (which generally leads to the title menu or a higher-level menu).
  */
