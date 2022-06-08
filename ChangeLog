@@ -1,4 +1,5 @@
 libdvdnav (next)
+ * add dvdnav_get_volid_string to obtain the volume id of the disc
  * add dvdnav_get_number_of_streams API to list tracks
  * add dvdnav_set_active_stream API to activate a stream
  * add dvdnav_toggle_spu_stream API to enable/disable the current SPU stream
