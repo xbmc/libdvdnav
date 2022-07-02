@@ -623,7 +623,7 @@ dvdnav_status_t dvdnav_get_serial_string(dvdnav_t *self, const char **serial_str
  * Note: The string is malloc'd so caller has to free() the returned
  * string when done with it.
  */
-const char * dvdnav_get_volid_string(dvdnav_t *self);
+char * dvdnav_get_volid_string(dvdnav_t *self);
 
 /*
  * Get video aspect code.

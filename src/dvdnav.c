@@ -955,7 +955,7 @@ dvdnav_status_t dvdnav_get_serial_string(dvdnav_t *this, const char **serial_str
   return DVDNAV_STATUS_OK;
 }
 
-const char * dvdnav_get_volid_string(dvdnav_t *this) {
+char * dvdnav_get_volid_string(dvdnav_t *this) {
   if (!this || !this->vm || !this->vm->dvd) {
     printerr("Invalid state, vm or reader not available.");
     return NULL;
