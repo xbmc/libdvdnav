@@ -151,7 +151,8 @@ dvdnav_status_t dvdnav_free_dup(dvdnav_t *this) {
 static dvdnav_status_t dvdnav_open_common(dvdnav_t** dest,
                                           void *priv, const dvdnav_logger_cb *logcb,
                                           const char *path,
-                                          dvdnav_stream_cb *stream_cb) {
+                                          dvdnav_stream_cb *stream_cb,
+                                          dvdnav_filesystem_h *fs) {
   dvdnav_t *this;
   struct timeval time;
 
@@ -174,7 +175,7 @@ static dvdnav_status_t dvdnav_open_common(dvdnav_t** dest,
   if(!this->vm) {
     goto fail;
   }
-  if(!vm_reset(this->vm, path, priv, stream_cb)) {
+  if(!vm_reset(this->vm, path, priv, stream_cb, fs)) {
     goto fail;
   }
 
@@ -213,24 +214,30 @@ fail:
 }
 
 dvdnav_status_t dvdnav_open(dvdnav_t** dest, const char *path) {
-  return dvdnav_open_common(dest, NULL, NULL, path, NULL);
+  return dvdnav_open_common(dest, NULL, NULL, path, NULL, NULL);
 }
 
 dvdnav_status_t dvdnav_open2(dvdnav_t** dest,
                              void *priv,const dvdnav_logger_cb *logcb,
                              const char *path) {
-  return dvdnav_open_common(dest, priv, logcb, path, NULL);
+  return dvdnav_open_common(dest, priv, logcb, path, NULL, NULL);
 }
 
 dvdnav_status_t dvdnav_open_stream(dvdnav_t** dest,
                                    void *priv, dvdnav_stream_cb *stream_cb) {
-  return dvdnav_open_common(dest, priv, NULL, NULL, stream_cb);
+  return dvdnav_open_common(dest, priv, NULL, NULL, stream_cb, NULL);
 }
 
 dvdnav_status_t dvdnav_open_stream2(dvdnav_t** dest,
                                     void *priv,const dvdnav_logger_cb *logcb,
                                     dvdnav_stream_cb *stream_cb) {
-  return dvdnav_open_common(dest, priv, logcb, NULL, stream_cb);
+  return dvdnav_open_common(dest, priv, logcb, NULL, stream_cb, NULL);
+}
+
+dvdnav_status_t dvdnav_open_files(dvdnav_t** dest,
+                                      void *priv, const dvdnav_logger_cb *logcb,
+                                      const char *path, dvdnav_filesystem_h *fs) {
+  return dvdnav_open_common(dest, priv, logcb, path, NULL, fs);
 }
 
 dvdnav_status_t dvdnav_close(dvdnav_t *this) {
@@ -280,7 +287,7 @@ dvdnav_status_t dvdnav_reset(dvdnav_t *this) {
 #ifdef LOG_DEBUG
   Log3(this, "resetting vm");
 #endif
-  if(!vm_reset(this->vm, NULL, NULL, NULL)) {
+  if(!vm_reset(this->vm, NULL, NULL, NULL, NULL)) {
     printerr("Error restarting the VM.");
     pthread_mutex_unlock(&this->vm_lock);
     return DVDNAV_STATUS_ERR;

@@ -32,6 +32,7 @@ extern "C" {
 
 #include "version.h"
 #include <dvdnav/dvd_types.h>
+#include <dvdread/dvd_filesystem.h>
 #include <dvdread/dvd_reader.h>
 #include <dvdread/nav_types.h>
 #include <dvdnav/dvdnav_events.h>
@@ -54,6 +55,8 @@ typedef struct dvdnav_s dvdnav_t;
 typedef int32_t dvdnav_status_t;
 
 typedef dvd_reader_stream_cb dvdnav_stream_cb;
+
+typedef dvd_reader_filesystem_h dvdnav_filesystem_h;
 
 /*
  * Unless otherwise stated, all functions return DVDNAV_STATUS_OK if
@@ -109,6 +112,15 @@ dvdnav_status_t dvdnav_open2(dvdnav_t **dest,
 dvdnav_status_t dvdnav_open_stream2(dvdnav_t **dest,
                                     void *priv, const dvdnav_logger_cb *,
                                     dvdnav_stream_cb *stream_cb);
+
+/*
+ * Attempts to open files given that the calling application provides the dvd_reader_filesystem implementation
+ * and the path to the file. Supports logging callbacks similarly to other dvdnav_open methods.
+ * Useful for opening files located on a virtual file system (vfs) such as smb, nfs, etc
+ */
+dvdnav_status_t dvdnav_open_files(dvdnav_t **dest,
+                             void *priv, const dvdnav_logger_cb *,
+                             const char *path, dvdnav_filesystem_h *fs);
 
 dvdnav_status_t dvdnav_dup(dvdnav_t **dest, dvdnav_t *src);
 dvdnav_status_t dvdnav_free_dup(dvdnav_t * _this);
